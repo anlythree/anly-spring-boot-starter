@@ -1,0 +1,7 @@
+server:
+  servlet:
+    context-path: /
+    encoding:
+      enabled: true
+      charset: utf-8
+      force: true

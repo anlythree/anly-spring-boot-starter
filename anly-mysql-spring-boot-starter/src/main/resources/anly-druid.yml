@@ -1,0 +1,65 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      enable: true
+      # 从这里开始(druid)
+      url: ${spring.datasource.url}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: ${spring.datasource.username}
+      password: ${spring.datasource.password}
+      db-type: mysql
+      initialSize: 1
+      minIdle: 1
+      maxActive: 500
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      #配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'x'
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      schema-username: anlythree
+      # 合并多个DruidDataSource的监控数据
+      #useGlobalDataSourceStat: true
+      filters: stat,wall
+      filter:
+        wall:
+          enabled: true
+          config:
+            commentAllow: true
+            multiStatementAllow: true
+            noneBaseStatementAllow: true
+      # 从这里结束(druid)
+      # StatViewServlet配置
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js , *.gif ,*.jpg ,*.png ,*.css ,*.ico , /druid/*"
+        session-stat-max-count: 1000
+        profile-enable: true
+        session-stat-enable: false
+      # 配置DruidStatViewServlet
+      stat-view-servlet:
+        # 新版需要配置这个属性才能访问监控页面
+        enabled: true
+        url-pattern: /druid/*
+        #  禁用HTML页面上的“Reset All”功能
+        reset-enable: true
+        # 登录名
+        login-username: admin
+        # 登录密码
+        login-password: matecloud
+        # IP白名单(没有配置或者为空，则允许所有访问)
+        allow: 127.0.0.1
+        # IP黑名单 (存在共同时，deny优先于allow)
+        deny: 192.168.0.1
