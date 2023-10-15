@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.anly</groupId>
+		<artifactId>anly-spring-boot-starter-parent</artifactId>
+		<version>0.0.1-release</version>
+	</parent>
+
+	<artifactId>anly-mysql-spring-boot-starter</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<dependencies>
+		<!-- 基础组件 -->
+		<dependency>
+			<groupId>com.anly</groupId>
+			<artifactId>anly-common-spring-boot-starter</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- mybatis & mybatisPlus组件 -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<!--			<scope>provided</scope>-->
+		</dependency>
+		<!-- 免手写Mapper、自动建表、数据自动填充、关联查询、冗余数据自动更新、动态条件 -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-extension</artifactId>
+		</dependency>
+		<!-- druid -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-3-starter</artifactId>
+		</dependency>
+		<!-- servlet支持，这个包是在tomcat下的，这里单独引入 -->
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+		</dependency>
+		<!-- MySql -->
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+	</dependencies>
+
+</project>
