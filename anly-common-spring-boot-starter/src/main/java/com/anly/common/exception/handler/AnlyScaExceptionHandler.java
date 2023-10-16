@@ -37,9 +37,9 @@ public class AnlyScaExceptionHandler {
     @ResponseBody
     public Result<?> handleParamException(MethodArgumentNotValidException e) {
         //封装需要返回的错误信息
-        StringJoiner stringJoiner = new StringJoiner(",", " find param error from anly【", "】");
+        StringJoiner stringJoiner = new StringJoiner(",", " find param error from anly\n【", "】");
         e.getBindingResult().getFieldErrors().forEach(fieldError -> stringJoiner.add(fieldError.getField() + ":" + fieldError.getDefaultMessage()));
-        log.error(stringJoiner.toString());
+        log.error("MethodArgumentNotValidException!,error info:{}",stringJoiner);
         //错误返回
         return Result.fail(ResultCode.GLOBAL_PARAM_ERROR.getCode(), stringJoiner.toString());
     }
@@ -56,7 +56,7 @@ public class AnlyScaExceptionHandler {
     public Result<?> handleException(AnlyScaException e) {
         HttpServletRequest httpRequest = getHttpRequest();
         httpRequest.getRequestURI();
-        log.error(getTrace(), e, "complete stacktrace from anly【" + getStackTrace(e) + "】");
+        log.error("AnlyScaException! Trace:{},complete stacktrace from anly【\n{}】",getTrace(),getStackTrace(e));
         ResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
         return Result.fail(resultCode);
     }
@@ -72,7 +72,7 @@ public class AnlyScaExceptionHandler {
     public Result<?> handleException(Exception e) {
         HttpServletRequest httpRequest = getHttpRequest();
         httpRequest.getRequestURI();
-        log.error(getTrace(), e, "complete stacktrace from anly【" + getStackTrace(e) + "】");
+        log.error("Exception! Trace:{},complete stacktrace from anly【\n{}】",getTrace(),getStackTrace(e));
         // 其他系统异常
         return Result.fail(ResultCode.ERROR);
     }
