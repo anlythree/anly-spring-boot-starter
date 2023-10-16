@@ -1,4 +1,4 @@
 com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure
-com.anly.anlymysql.config.druid.DruidConfiguration
-com.anly.anlymysql.config.mybatis.JacksonConfiguration
-com.anly.anlymysql.config.mybatis.MybatisPlusConfiguration
+com.anly.mysql.config.druid.DruidConfiguration
+com.anly.mysql.config.mybatis.JacksonConfiguration
+com.anly.mysql.config.mybatis.MybatisPlusConfiguration
