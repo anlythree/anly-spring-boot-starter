@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.Getter;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -19,7 +20,8 @@ import java.io.Serializable;
 @Schema(description = "统一响应消息报文")
 public class Result<T> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = 5191497917447621323L;
 
 	@Schema(description = "状态码", required = true)
 	private int code;
