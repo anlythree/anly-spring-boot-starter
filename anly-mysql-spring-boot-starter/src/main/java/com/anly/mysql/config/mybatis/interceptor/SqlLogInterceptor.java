@@ -1,7 +1,7 @@
 package com.anly.mysql.config.mybatis.interceptor;
 
 import com.alibaba.druid.pool.DruidPooledPreparedStatement;
-import com.anly.common.exception.AnlyScaException;
+import com.anly.common.exception.AnlyException;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -52,7 +52,7 @@ public class SqlLogInterceptor implements Interceptor {
 			DruidPooledPreparedStatement druidStatement = (DruidPooledPreparedStatement)statement;
 			originalSql = druidStatement.getSql();
 		}else {
-			throw new AnlyScaException("框架暂不支持除druid之外的连接方式");
+			throw new AnlyException("框架暂不支持除druid之外的连接方式");
 		}
 		originalSql = originalSql.replaceAll("[\\s]+", StringPool.SPACE);
 		int index = indexOfSqlStart(originalSql);

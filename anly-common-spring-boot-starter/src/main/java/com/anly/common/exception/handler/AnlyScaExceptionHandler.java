@@ -2,7 +2,8 @@ package com.anly.common.exception.handler;
 
 import com.anly.common.api.Result;
 import com.anly.common.api.ResultCode;
-import com.anly.common.exception.AnlyScaException;
+import com.anly.common.exception.AnlyException;
+import com.anly.common.exception.AuthException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -44,6 +45,23 @@ public class AnlyScaExceptionHandler {
         return Result.fail(ResultCode.GLOBAL_PARAM_ERROR.getCode(), stringJoiner.toString());
     }
 
+    /**
+     * 自定义异常处理
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(AuthException.class)
+    @ResponseBody
+    public Result<?> handleAuthException(AuthException e) {
+        HttpServletRequest httpRequest = getHttpRequest();
+        httpRequest.getRequestURI();
+        log.error("AuthException! Trace:{},authType:{},authMessage:{},complete stacktrace from anly【\n{}】",
+                getTrace(),e.getAuthType(),e.getMessage(),getStackTrace(e));
+        ResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
+        return Result.fail(resultCode,e.getMessage());
+    }
+
 
     /**
      * 自定义异常处理
@@ -51,9 +69,9 @@ public class AnlyScaExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(AnlyScaException.class)
+    @ExceptionHandler(AnlyException.class)
     @ResponseBody
-    public Result<?> handleException(AnlyScaException e) {
+    public Result<?> handleAnlyException(AnlyException e) {
         HttpServletRequest httpRequest = getHttpRequest();
         httpRequest.getRequestURI();
         log.error("AnlyScaException! Trace:{},complete stacktrace from anly【\n{}】",getTrace(),getStackTrace(e));

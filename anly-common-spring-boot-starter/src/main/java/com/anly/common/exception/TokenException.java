@@ -5,7 +5,7 @@ package com.anly.common.exception;
  *
  * @author anlythree
  */
-public class TokenException extends AnlyScaException {
+public class TokenException extends AnlyException {
 
 	private static final long serialVersionUID = -109638013567525177L;
 

@@ -1,8 +1,10 @@
 package com.anly.common.exception;
 
 import com.anly.common.api.ResultCode;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
@@ -12,8 +14,10 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
  * @author anlythree
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper=true)
-public class AnlyScaException extends RuntimeException {
+public class AnlyException extends RuntimeException {
 
 	private static final long serialVersionUID = 5782968730281544562L;
 
@@ -21,11 +25,11 @@ public class AnlyScaException extends RuntimeException {
 
 	private int status = INTERNAL_SERVER_ERROR.value();
 
-	public AnlyScaException(String message) {
+	public AnlyException(String message) {
 		super(message);
 	}
 
-	public AnlyScaException(ResultCode errorCode, String message) {
+	public AnlyException(ResultCode errorCode, String message) {
 		super(message);
 		this.errorCode = errorCode;
 	}

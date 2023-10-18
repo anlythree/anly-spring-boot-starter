@@ -6,7 +6,7 @@ package com.anly.common.exception;
  *
  * @author anlythree
  */
-public class RedissonLockException extends AnlyScaException {
+public class RedissonLockException extends AnlyException {
 
     private static final long serialVersionUID = -6422212844622271825L;
 
