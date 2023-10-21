@@ -84,7 +84,7 @@
         <lombok.version>1.18.24</lombok.version>
         <hutool.version>5.8.19</hutool.version>
         <caffeine.version>3.1.2</caffeine.version>
-        <snakeyaml.version>1.33</snakeyaml.version>
+        <snakeyaml.version>2.2</snakeyaml.version>
     </properties>
 
     <dependencyManagement>
@@ -156,7 +156,7 @@
                 <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
-            <!-- 暂未升级至3.4.2版本，单独修改为上一个版本号 -->
+            <!-- mybatisplus的自动生成代码功能 -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
