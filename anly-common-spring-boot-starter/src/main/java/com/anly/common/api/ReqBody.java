@@ -11,12 +11,11 @@ import java.io.Serializable;
 /**
  * 请求体
  *
- * @param <T> 　T业务入参
  * @author anlythree
  */
 @Data
 @Getter
-@Schema(description = "请求体")
+@Schema(description = "公共请求体")
 public class ReqBody<T> implements Serializable {
 
     @Serial
@@ -30,8 +29,4 @@ public class ReqBody<T> implements Serializable {
      * app版本号
      */
     private String cv;
-
-    @Schema(description = "业务入参")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private T reqData;
 }
