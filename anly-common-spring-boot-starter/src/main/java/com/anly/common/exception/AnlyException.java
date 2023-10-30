@@ -23,6 +23,8 @@ public class AnlyException extends RuntimeException {
 
 	private ResultCode errorCode;
 
+	private Exception originException;
+
 	private int status = INTERNAL_SERVER_ERROR.value();
 
 	public AnlyException(String message) {
@@ -32,5 +34,10 @@ public class AnlyException extends RuntimeException {
 	public AnlyException(ResultCode errorCode, String message) {
 		super(message);
 		this.errorCode = errorCode;
+	}
+
+	public AnlyException(Exception originException,String message) {
+		super(message);
+		this.originException = originException;
 	}
 }
