@@ -9,14 +9,14 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * 统一响应消息报文
+ * 请求体
  *
  * @param <T> 　T业务入参
  * @author anlythree
  */
 @Data
 @Getter
-@Schema(description = "统一响应消息报文")
+@Schema(description = "请求体")
 public class ReqBody<T> implements Serializable {
 
     @Serial
