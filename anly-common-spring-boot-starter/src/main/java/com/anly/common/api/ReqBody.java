@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @Getter
 @Schema(description = "公共请求体")
-public class ReqBody<T> implements Serializable {
+public class ReqBody implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 259053381547310211L;
