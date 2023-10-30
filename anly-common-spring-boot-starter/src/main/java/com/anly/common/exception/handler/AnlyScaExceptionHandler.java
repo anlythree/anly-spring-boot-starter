@@ -79,7 +79,7 @@ public class AnlyScaExceptionHandler {
             // 如果有异常的原始报错，则在结尾展示
             originExceptionStr = "complete origin exception is 【"+ getStackTrace(e.getOriginException())+"】";
         }
-        log.error("AnlyException! complete stacktrace from anly【\n{}】"+ originExceptionStr ,getStackTrace(e));
+        log.error("AnlyException! complete stacktrace from anly【\n{}】"+ originExceptionStr+e.getMessage(),getStackTrace(e));
         ResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
         return Result.fail(resultCode,e.getMessage());
     }

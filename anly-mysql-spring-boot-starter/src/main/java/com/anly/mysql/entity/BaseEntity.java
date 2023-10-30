@@ -1,6 +1,8 @@
 package com.anly.mysql.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -9,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -21,6 +24,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BaseEntity implements Serializable{
 
+    @Serial
     private static final long serialVersionUID = -8170491472786464440L;
 
     /**
@@ -32,26 +36,43 @@ public class BaseEntity implements Serializable{
     private Long id;
 
     /**
+     * 备注
+     */
+    @Schema(description = "备注")
+    private Integer remark;
+
+    /**
      * 创建人
      */
     @Schema(description = "创建人")
+    @TableField(fill = FieldFill.INSERT)
     private String creator;
 
     /**
-     * 更新人
+     * 修改人
      */
-    @Schema(description = "更新人")
+    @Schema(description = "修改人")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updater;
 
     /**
      * 创建时间
      */
     @Schema(description = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
     @Schema(description = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+
+    /**
+     * 删除标志位
+     */
+    @Schema(description = "删除标志位")
+    @TableField(fill = FieldFill.INSERT)
+    private Integer delFlag;
 }
