@@ -46,7 +46,7 @@ public class AnlyScaExceptionHandler {
     }
 
     /**
-     * 自定义异常处理
+     * 认证异常处理
      *
      * @param e
      * @return
@@ -56,8 +56,8 @@ public class AnlyScaExceptionHandler {
     public Result<?> handleAuthException(AuthException e) {
         HttpServletRequest httpRequest = getHttpRequest();
         httpRequest.getRequestURI();
-        log.error("AuthException! Trace:{},authType:{},authMessage:{},complete stacktrace from anly【\n{}】",
-                getTrace(),e.getAuthType(),e.getMessage(),getStackTrace(e));
+        log.error("AuthException! authType:{},authMessage:{},complete stacktrace from anly【\n{}】",
+                e.getAuthType(),e.getMessage(),getStackTrace(e));
         ResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
         return Result.fail(resultCode,e.getMessage());
     }
@@ -79,9 +79,9 @@ public class AnlyScaExceptionHandler {
             // 如果有异常的原始报错，则在结尾展示
             originExceptionStr = "complete origin exception is 【"+ getStackTrace(e.getOriginException())+"】";
         }
-        log.error("AnlyException! Trace:{},complete stacktrace from anly【\n{}】"+ originExceptionStr ,getTrace(),getStackTrace(e));
+        log.error("AnlyException! complete stacktrace from anly【\n{}】"+ originExceptionStr ,getStackTrace(e));
         ResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
-        return Result.fail(resultCode);
+        return Result.fail(resultCode,e.getMessage());
     }
 
     /**
@@ -95,7 +95,7 @@ public class AnlyScaExceptionHandler {
     public Result<?> handleException(Exception e) {
         HttpServletRequest httpRequest = getHttpRequest();
         httpRequest.getRequestURI();
-        log.error("Exception! Trace:{},complete stacktrace from anly【\n{}】",getTrace(),getStackTrace(e));
+        log.error("Exception! complete stacktrace from anly【\n{}】",getStackTrace(e));
         // 其他系统异常
         return Result.fail(ResultCode.ERROR);
     }
