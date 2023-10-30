@@ -63,13 +63,10 @@ public class Result<T> implements Serializable {
 		this.time = System.currentTimeMillis();
 	}
 
-	/**
-	 * 返回状态码
-	 *
-	 * @param resultCode 状态码
-	 * @param <T>        泛型标识
-	 * @return ApiResult
-	 */
+	public static <T> Result<T> success() {
+		return new Result<>(ResultCode.SUCCESS);
+	}
+
 	public static <T> Result<T> success(IResultCode resultCode) {
 		return new Result<>(resultCode);
 	}
