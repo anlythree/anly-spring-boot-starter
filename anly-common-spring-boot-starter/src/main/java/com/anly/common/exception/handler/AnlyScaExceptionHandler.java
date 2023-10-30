@@ -42,7 +42,7 @@ public class AnlyScaExceptionHandler {
         e.getBindingResult().getFieldErrors().forEach(fieldError -> stringJoiner.add(fieldError.getField() + ":" + fieldError.getDefaultMessage()));
         log.error("MethodArgumentNotValidException!,error info:{}",stringJoiner);
         //错误返回
-        return Result.fail(ResultCode.GLOBAL_PARAM_ERROR.getCode(), stringJoiner.toString());
+        return Result.fail(ResultCode.PARAM_ERROR.getCode(), stringJoiner.toString());
     }
 
     /**
