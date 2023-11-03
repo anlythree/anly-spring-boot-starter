@@ -22,6 +22,8 @@ public class LocalHolder {
 
     private final ThreadLocal<String> THREAD_LOCAL_TRACE = new TransmittableThreadLocal<>();
 
+    private final ThreadLocal<String> THREAD_LOCAL_URL = new TransmittableThreadLocal<>();
+
     private final ThreadLocal<CurrentUser> THREAD_LOCAL_CURRENT_USER = new TransmittableThreadLocal<>();
 
     /**
@@ -99,6 +101,31 @@ public class LocalHolder {
      */
     public void clearCurrentUser() {
         THREAD_LOCAL_CURRENT_USER.remove();
+    }
+
+    /**
+     * TTL 设置当前url<br/>
+     *
+     * @param url 当前用户
+     */
+    public void setCurrentUser(String url) {
+        THREAD_LOCAL_URL.set(url);
+    }
+
+    /**
+     * 获取TTL中的当前url
+     *
+     * @return String
+     */
+    public String getUrl() {
+        return THREAD_LOCAL_URL.get();
+    }
+
+    /**
+     * 清除当前url
+     */
+    public void clearUrl() {
+        THREAD_LOCAL_URL.remove();
     }
 
 }

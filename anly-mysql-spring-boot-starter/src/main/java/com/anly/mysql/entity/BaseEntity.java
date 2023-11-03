@@ -33,7 +33,7 @@ public class BaseEntity implements Serializable{
     @JsonSerialize(using = ToStringSerializer.class)
     @Schema(description = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private Integer id;
 
     /**
      * 备注

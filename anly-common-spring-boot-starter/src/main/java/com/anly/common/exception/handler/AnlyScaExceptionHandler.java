@@ -1,5 +1,6 @@
 package com.anly.common.exception.handler;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.anly.common.api.Result;
 import com.anly.common.api.ResultCode;
 import com.anly.common.exception.AnlyException;
@@ -42,7 +43,9 @@ public class AnlyScaExceptionHandler {
         e.getBindingResult().getFieldErrors().forEach(fieldError -> stringJoiner.add(fieldError.getField() + ":" + fieldError.getDefaultMessage()));
         log.error("MethodArgumentNotValidException!,error info:{}",stringJoiner);
         //错误返回
-        return Result.fail(ResultCode.PARAM_ERROR.getCode(), stringJoiner.toString());
+        Result<Object> fail = Result.fail(ResultCode.PARAM_ERROR.getCode(), stringJoiner.toString());
+        log.error("error response:"+ JSONObject.toJSONString(fail));
+        return fail;
     }
 
     /**
@@ -59,7 +62,9 @@ public class AnlyScaExceptionHandler {
         log.error("AuthException! authType:{},authMessage:{},complete stacktrace from anly【\n{}】",
                 e.getAuthType(),e.getMessage(),getStackTrace(e));
         ResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
-        return Result.fail(resultCode,e.getMessage());
+        Result<Object> fail = Result.fail(resultCode, e.getMessage());
+        log.error("error response:"+ JSONObject.toJSONString(fail));
+        return fail;
     }
 
 
@@ -81,7 +86,9 @@ public class AnlyScaExceptionHandler {
         }
         log.error("AnlyException! complete stacktrace from anly【\n{}】"+ originExceptionStr+e.getMessage(),getStackTrace(e));
         ResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
-        return Result.fail(resultCode,e.getMessage());
+        Result<Object> fail = Result.fail(resultCode, e.getMessage());
+        log.error("error response:"+ JSONObject.toJSONString(fail));
+        return fail;
     }
 
     /**
@@ -97,17 +104,15 @@ public class AnlyScaExceptionHandler {
         httpRequest.getRequestURI();
         log.error("Exception! complete stacktrace from anly【\n{}】",getStackTrace(e));
         // 其他系统异常
-        return Result.fail(ResultCode.ERROR);
+        Result<Object> fail = Result.fail(ResultCode.ERROR);
+        log.error("error response:"+ JSONObject.toJSONString(fail));
+        return fail;
     }
 
 
     protected HttpServletRequest getHttpRequest() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return Optional.ofNullable(attributes).map(ServletRequestAttributes::getRequest).orElse(null);
-    }
-
-    protected String getTrace() {
-        return this.getHttpRequest().getHeader("TRACE");
     }
 
     /**
