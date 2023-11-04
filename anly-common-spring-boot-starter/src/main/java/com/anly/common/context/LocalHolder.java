@@ -108,7 +108,7 @@ public class LocalHolder {
      *
      * @param url 当前用户
      */
-    public void setCurrentUser(String url) {
+    public void setUrl(String url) {
         THREAD_LOCAL_URL.set(url);
     }
 

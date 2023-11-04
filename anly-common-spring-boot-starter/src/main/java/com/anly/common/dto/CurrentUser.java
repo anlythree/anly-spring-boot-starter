@@ -1,5 +1,6 @@
 package com.anly.common.dto;
 
+import com.anly.common.enums.YesOrNotEnum;
 import lombok.Data;
 
 import java.io.Serial;
@@ -52,7 +53,7 @@ public class CurrentUser implements Serializable {
     /**
      * 登录类型
      */
-    private String loginType;
+    private YesOrNotEnum loginType;
 
 
 }

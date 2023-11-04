@@ -13,18 +13,21 @@ public enum YesOrNotEnum {
     /**
      * 是
      */
-    Y("Y", "是"),
+    Y("Y", 1,"是"),
 
     /**
      * 否
      */
-    N("N", "否");
+    N("N", 0,"否");
 
-    private final String code;
+    private final String codeStr;
+
+    private final int code;
 
     private final String message;
 
-    YesOrNotEnum(String code, String message) {
+    YesOrNotEnum(String codeStr, int code, String message) {
+        this.codeStr = codeStr;
         this.code = code;
         this.message = message;
     }

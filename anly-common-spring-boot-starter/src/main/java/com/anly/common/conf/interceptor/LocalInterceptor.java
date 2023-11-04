@@ -2,6 +2,7 @@ package com.anly.common.conf.interceptor;
 
 import com.anly.common.context.LocalHolder;
 import com.anly.common.dto.CurrentUser;
+import com.anly.common.enums.YesOrNotEnum;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -27,14 +28,22 @@ public class LocalInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String trace = request.getHeader("Trace");
         if(StringUtils.isNotEmpty(trace)){
+            // 添加trace到LocalHolder中
             LocalHolder.setTrace(trace);
         }
         CurrentUser currentUser = new CurrentUser();
-        currentUser.setUserName("systemDefault");
-        currentUser.setPhone("99999999999");
-        currentUser.setUserId(-1);
-        currentUser.setLoginType("未登录");
+        String uId = request.getHeader("uId");
+        if(StringUtils.isNotEmpty(uId) && uId.matches("^-?\\d+$")){
+            currentUser.setUserId(Integer.parseInt(uId));
+            currentUser.setLoginType(YesOrNotEnum.Y);
+        }else {
+            currentUser.setUserId(-1);
+            currentUser.setLoginType(YesOrNotEnum.N);
+        }
+        // 添加当前用户 & 登陆状态
         LocalHolder.setCurrentUser(currentUser);
+        // 添加url到LocalHolder中
+        LocalHolder.setUrl(request.getRequestURI());
         return true;
     }
 }
