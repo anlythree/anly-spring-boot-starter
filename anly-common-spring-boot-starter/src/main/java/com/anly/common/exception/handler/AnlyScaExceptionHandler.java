@@ -1,9 +1,10 @@
 package com.anly.common.exception.handler;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.anly.common.api.IResultCode;
 import com.anly.common.api.Result;
 import com.anly.common.api.ResultCode;
-import com.anly.common.context.LocalHolder;
+import com.anly.common.holder.LocalHolder;
 import com.anly.common.exception.AnlyException;
 import com.anly.common.exception.AuthException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,7 +63,7 @@ public class AnlyScaExceptionHandler {
         httpRequest.getRequestURI();
         log.error("AuthException! authType:{},authMessage:{},complete stacktrace from anly【\n{}】",
                 e.getAuthType(),e.getMessage(),getStackTrace(e));
-        ResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
+        IResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
         Result<Object> fail = Result.fail(resultCode, e.getMessage());
         log.error("error response-->url:["+ LocalHolder.getUrl()+"],result:[" + JSONObject.toJSONString(fail));
         return fail;
@@ -86,7 +87,7 @@ public class AnlyScaExceptionHandler {
             originExceptionStr = "complete origin exception is 【"+ getStackTrace(e.getOriginException())+"】";
         }
         log.error("AnlyException! complete stacktrace from anly【\n{}】"+ originExceptionStr+e.getMessage(),getStackTrace(e));
-        ResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
+        IResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
         Result<Object> fail = Result.fail(resultCode, e.getMessage());
         log.error("error response-->url:["+ LocalHolder.getUrl()+"],result:["+ JSONObject.toJSONString(fail));
         return fail;

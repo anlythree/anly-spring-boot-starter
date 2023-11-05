@@ -2,12 +2,10 @@ package com.anly.common.aspect;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.anly.common.aspect.anno.OperationLog;
-import com.anly.common.context.LocalHolder;
+import com.anly.common.holder.LocalHolder;
 import com.anly.common.utils.AnlyTimeUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;

@@ -1,7 +1,7 @@
 package com.anly.common.api;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.Getter;
 
@@ -20,13 +20,31 @@ public class ReqBody implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 259053381547310211L;
+
     /**
-     * 客户端 (0:ios,1:ipadOs,2:安卓,3:web,4:未知)
+     * 客户端 (0:IOS，1:IpadOS，2:华为，3:小米，4:三星，5:魅族，6:索尼，7:web,8:未知)
      */
+    @NotEmpty(message = "st为空")
     private String st;
 
     /**
-     * app版本号
+     * app版本号 ，未知为-1
      */
+    @NotEmpty(message = "cv为空")
     private String cv;
+
+    /**
+     * 客户端唯一标识
+     */
+    private String imei;
+
+    /**
+     * 设备型号
+     */
+    private String sn;
+
+    /**
+     * 请求发起时间
+     */
+    private String requestTime;
 }

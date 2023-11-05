@@ -1,6 +1,6 @@
 package com.anly.common.conf.interceptor;
 
-import com.anly.common.context.LocalHolder;
+import com.anly.common.holder.LocalHolder;
 import com.anly.common.dto.CurrentUser;
 import com.anly.common.enums.YesOrNotEnum;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,6 +44,8 @@ public class LocalInterceptor implements HandlerInterceptor {
         LocalHolder.setCurrentUser(currentUser);
         // 添加url到LocalHolder中
         LocalHolder.setUrl(request.getRequestURI());
+        // 添加来源Ip到LocalHolder中
+        LocalHolder.setRemoteIp(request.getRemoteAddr());
         return true;
     }
 }

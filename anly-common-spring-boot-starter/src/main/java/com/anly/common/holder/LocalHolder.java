@@ -1,8 +1,11 @@
-package com.anly.common.context;
+package com.anly.common.holder;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.anly.common.dto.CurrentUser;
 import lombok.experimental.UtilityClass;
+import org.assertj.core.util.Maps;
+
+import java.util.Map;
 
 /**
  * 本地常用变量holder
@@ -20,15 +23,33 @@ public class LocalHolder {
      */
     private final ThreadLocal<String> THREAD_LOCAL_TENANT = new TransmittableThreadLocal<>();
 
+    /**
+     * 支持父子线程之间的trace传递
+     */
     private final ThreadLocal<String> THREAD_LOCAL_TRACE = new TransmittableThreadLocal<>();
 
+    /**
+     * 支持父子线程之间的请求URL传递
+     */
     private final ThreadLocal<String> THREAD_LOCAL_URL = new TransmittableThreadLocal<>();
 
+    /**
+     * 支持父子线程之间的登陆用户信息传递
+     */
     private final ThreadLocal<CurrentUser> THREAD_LOCAL_CURRENT_USER = new TransmittableThreadLocal<>();
 
     /**
-     * TTL 设置租户ID<br/>
-     * <b>谨慎使用此方法,避免嵌套调用 </b>
+     * 支持父子线程之间的客户端ip传递
+     */
+    private final ThreadLocal<String> THREAD_LOCAL_REMOTE_IP = new TransmittableThreadLocal<>();
+
+    /**
+     * 支持父子线程之间的自定义信息传递
+     */
+    private final ThreadLocal<Map<String,Object>> THREAD_LOCAL_CUSTOM = new TransmittableThreadLocal<>();
+
+    /**
+     * TTL 设置租户ID
      *
      * @param tenantId 租户ID
      */
@@ -46,15 +67,7 @@ public class LocalHolder {
     }
 
     /**
-     * 清除tenantId
-     */
-    public void clearTenantId() {
-        THREAD_LOCAL_TENANT.remove();
-    }
-
-    /**
-     * TTL 设置trace<br/>
-     * <b>谨慎使用此方法,避免嵌套调用 </b>
+     * TTL 设置trace
      *
      * @param trace 流水号
      */
@@ -79,7 +92,7 @@ public class LocalHolder {
     }
 
     /**
-     * TTL 设置当前用户<br/>
+     * TTL 设置当前用户
      *
      * @param currentUser 当前用户
      */
@@ -104,7 +117,7 @@ public class LocalHolder {
     }
 
     /**
-     * TTL 设置当前url<br/>
+     * TTL 设置当前url
      *
      * @param url 当前用户
      */
@@ -122,11 +135,56 @@ public class LocalHolder {
     }
 
     /**
-     * 清除当前url
+     * TTL 设置当前请求来源ip
+     *
+     * @param ip 请求来源ip
      */
-    public void clearUrl() {
-        THREAD_LOCAL_URL.remove();
+    public void setRemoteIp(String ip) {
+        THREAD_LOCAL_REMOTE_IP.set(ip);
     }
 
+    /**
+     * 获取TTL中的当前请求来源ip
+     *
+     * @return String
+     */
+    public String getRemoteIp() {
+        return THREAD_LOCAL_REMOTE_IP.get();
+    }
+
+    /**
+     * TTL 设置自定义变量
+     * @param fieldName 自定义变量名称
+     * @param obj 自定义变量值
+     */
+    public void set(String fieldName,Object obj) {
+        if(THREAD_LOCAL_CUSTOM.get() == null){
+            THREAD_LOCAL_CUSTOM.set(Maps.newHashMap(fieldName,obj));
+        }
+        THREAD_LOCAL_CUSTOM.get().put(fieldName,obj);
+    }
+
+    /**
+     * 获取TTL中的自定义变量
+     * @param fieldName 自定义变量名称
+     * @return 自定义变量值
+     */
+    public Object get(String fieldName) {
+        if(THREAD_LOCAL_CUSTOM.get() == null){
+            return null;
+        }
+        return THREAD_LOCAL_CUSTOM.get().get(fieldName);
+    }
+
+    /**
+     * 清除当前自定义变量
+     * @param fieldName 自定义变量名称
+     */
+    public void clear(String fieldName) {
+        if(THREAD_LOCAL_CUSTOM.get() == null){
+            return;
+        }
+        THREAD_LOCAL_CUSTOM.get().remove(fieldName);
+    }
 }
 
