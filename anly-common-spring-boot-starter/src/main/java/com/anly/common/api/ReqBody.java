@@ -49,13 +49,13 @@ public class ReqBody implements Serializable {
     /**
      * 请求发起时间
      */
-    private String requestTime;
+    private LocalDateTime requestTime;
 
     public void setDefaultBasicField(){
         this.st = 0;
         this.cv = "-1";
         this.imei = "88-A4-C2-2F-7D-7E";
         this.sn = "iphone 15 pro";
-        this.requestTime = AnlyTimeUtil.timeToString(LocalDateTime.now());
+        this.requestTime = LocalDateTime.now();
     }
 }
