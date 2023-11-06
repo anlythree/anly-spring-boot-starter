@@ -27,7 +27,7 @@ public class ReqBody implements Serializable {
      * 客户端 (0:IOS，1:IpadOS，2:华为，3:小米，4:三星，5:魅族，6:索尼，7:web,8:未知)
      */
     @NotEmpty(message = "st为空")
-    private String st;
+    private Integer st;
 
     /**
      * app版本号 ，未知为-1
@@ -51,7 +51,7 @@ public class ReqBody implements Serializable {
     private String requestTime;
 
     public void setDefaultBasicField(){
-        this.st = "0";
+        this.st = 0;
         this.cv = "-1";
         this.imei = "88-A4-C2-2F-7D-7E";
         this.sn = "iphone 15 pro";
