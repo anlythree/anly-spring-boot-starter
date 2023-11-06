@@ -39,7 +39,7 @@ public class BaseEntity implements Serializable{
      * 备注
      */
     @Schema(description = "备注")
-    private Integer remark;
+    private String remark;
 
     /**
      * 创建人
