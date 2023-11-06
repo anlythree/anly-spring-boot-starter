@@ -1,5 +1,6 @@
 package com.anly.common.api;
 
+import com.anly.common.utils.AnlyTimeUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.Getter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 请求体
@@ -47,4 +49,11 @@ public class ReqBody implements Serializable {
      * 请求发起时间
      */
     private String requestTime;
+
+    public void setDefaultBasicField(){
+        this.cv = "-1";
+        this.imei = "88-A4-C2-2F-7D-7E";
+        this.sn = "iphone 15 pro";
+        this.requestTime = AnlyTimeUtil.timeToString(LocalDateTime.now());
+    }
 }
