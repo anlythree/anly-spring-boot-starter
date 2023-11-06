@@ -3,6 +3,7 @@ package com.anly.common.api;
 import com.anly.common.utils.AnlyTimeUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 
@@ -26,7 +27,7 @@ public class ReqBody implements Serializable {
     /**
      * 客户端 (0:IOS，1:IpadOS，2:华为，3:小米，4:三星，5:魅族，6:索尼，7:web,8:未知)
      */
-    @NotEmpty(message = "st为空")
+    @NotNull(message = "st为空")
     private Integer st;
 
     /**
