@@ -51,6 +51,7 @@ public class ReqBody implements Serializable {
     private String requestTime;
 
     public void setDefaultBasicField(){
+        this.st = "0";
         this.cv = "-1";
         this.imei = "88-A4-C2-2F-7D-7E";
         this.sn = "iphone 15 pro";
