@@ -4,3 +4,4 @@ com.anly.common.aspect.OperationLogAspect
 com.anly.common.conf.interceptor.LocalInterceptor
 com.anly.common.conf.interceptor.WebConfig
 com.anly.common.conf.springweb.InitRestTemplate
+com.anly.common.conf.jackson.JacksonReqFormat

@@ -25,12 +25,12 @@ public class AnlyTimeUtil {
     /**
      * 通用日期格式
      */
-    private final static DateTimeFormatter FMT_DATE = DateTimeFormatter.ofPattern(AnlyScaConstant.DATE_FORMAT);
+    public final static DateTimeFormatter FMT_DATE = DateTimeFormatter.ofPattern(AnlyScaConstant.DATE_FORMAT);
 
     /**
      * 通用时间格式
      */
-    private final static DateTimeFormatter FMT_DATE_TIME = DateTimeFormatter.ofPattern(AnlyScaConstant.DATETIME_FORMAT);
+    public final static DateTimeFormatter FMT_DATE_TIME = DateTimeFormatter.ofPattern(AnlyScaConstant.DATETIME_FORMAT);
 
     /**
      * 时间(日期)格式转成String类型

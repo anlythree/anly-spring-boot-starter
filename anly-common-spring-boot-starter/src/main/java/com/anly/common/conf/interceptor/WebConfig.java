@@ -22,4 +22,5 @@ public class WebConfig  implements WebMvcConfigurer {
         // 注册拦截器，并设置拦截路径
         registry.addInterceptor(localInterceptor).addPathPatterns("/**");
     }
+
 }
