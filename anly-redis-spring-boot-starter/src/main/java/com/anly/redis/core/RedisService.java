@@ -18,6 +18,7 @@ package com.anly.redis.core;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.anly.redis.util.RedisLockUtil;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -45,11 +46,10 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RedisService {
 
-	@Autowired
-	@SuppressWarnings("all")
+	@Resource
 	private RedisTemplate<String, Object> redisTemplate;
 
-	@Autowired
+	@Resource
 	private RedisLockUtil redisLockUtil;
 
 	/**
