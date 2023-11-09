@@ -1,5 +1,7 @@
 package com.anly.redis.util;
 
+import com.anly.common.holder.LocalHolder;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.connection.ReturnType;
 import org.springframework.data.redis.core.RedisCallback;
@@ -22,6 +24,25 @@ public class RedisLockUtil {
 	private RedisTemplate<String, Object> redisTemplate;
 
 	private static final byte[] SCRIPT_RELEASE_LOCK = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end".getBytes();
+
+	/**
+	 * 尝试获取分布式锁
+	 *
+	 * @param key       键
+	 * @param expire    锁的有效时间（秒）
+	 */
+	public synchronized Boolean tryLock(String key, long expire) {
+		return tryLock(key, LocalHolder.getTrace(),expire);
+	}
+
+	/**
+	 * 释放分布式锁
+	 *
+	 * @param key       键
+	 */
+	public synchronized Boolean releaseLock(String key) {
+		return releaseLock(key, LocalHolder.getTrace());
+	}
 
 	/**
 	 * 尝试获取分布式锁

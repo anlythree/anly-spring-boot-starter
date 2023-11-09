@@ -2,6 +2,7 @@ package com.anly.common.holder;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.anly.common.dto.CurrentUser;
+import io.micrometer.common.util.StringUtils;
 import lombok.experimental.UtilityClass;
 import org.assertj.core.util.Maps;
 
@@ -81,7 +82,8 @@ public class LocalHolder {
      * @return String
      */
     public String getTrace() {
-        return THREAD_LOCAL_TRACE.get();
+        String trace = THREAD_LOCAL_TRACE.get();
+        return StringUtils.isEmpty(trace) ? "EMPTY_TRACE":trace;
     }
 
     /**
