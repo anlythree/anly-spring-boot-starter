@@ -17,6 +17,8 @@
 package com.anly.redis.core;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.anly.common.api.ResultCode;
+import com.anly.common.exception.AnlyException;
 import com.anly.common.utils.AnlyUtil;
 import com.anly.redis.util.RedisLockUtil;
 import jakarta.annotation.Resource;
@@ -70,7 +72,7 @@ public class RedisService {
 			return true;
 		} catch (Exception e) {
 			log.error("anly-redis error: set expire time error!,key:{},time:{}",key,time);
-			return false;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -83,7 +85,7 @@ public class RedisService {
 	public Long getExpire(String key) {
 		if(StringUtils.isEmpty(key)){
 			log.error("anly-redis error:getExpire error: key is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		return redisTemplate.getExpire(key, TimeUnit.SECONDS);
 	}
@@ -116,6 +118,7 @@ public class RedisService {
 			}
 		} catch (Exception e) {
 			log.error("anly-redis error: set key-value and expire time error!,key:{},value:{},time:{}",key,value,time);
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -157,13 +160,13 @@ public class RedisService {
 	public Boolean hasKey(String key) {
 		if(StringUtils.isEmpty(key)){
 			log.error("anly-redis error:hasKey error: key is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		try {
 			return redisTemplate.hasKey(key);
 		} catch (Exception e) {
 			log.error("anly-redis error: hasKey error!,key:{}",key);
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -217,7 +220,7 @@ public class RedisService {
 			return true;
 		} catch (Exception e) {
 			log.error("anly-redis error: set key-value error!,key:{}",key);
-			return false;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -231,10 +234,10 @@ public class RedisService {
 	public Long incr(String key, Long delta) {
 		if(StringUtils.isEmpty(key)){
 			log.error("anly-redis error: incr error: key is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		if (delta < 0) {
-			throw new RuntimeException("递增因子必须大于 0");
+			throw new AnlyException("递增因子必须大于 0");
 		}
 		return redisTemplate.opsForValue().increment(key, delta);
 	}
@@ -249,7 +252,7 @@ public class RedisService {
 	public Long decr(String key, Long delta) {
 		if(StringUtils.isEmpty(key)){
 			log.error("anly-redis error: decr error: key is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		if (delta < 0) {
 			throw new RuntimeException("递减因子必须大于 0");
@@ -291,7 +294,7 @@ public class RedisService {
 			return true;
 		} catch (Exception e) {
 			log.error("anly-redis error: hmset error: key:{},map:{}",key,map);
-			return false;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -312,7 +315,7 @@ public class RedisService {
 			return true;
 		} catch (Exception e) {
 			log.error("anly-redis error: hmset and set expire time error: key:{},map:{},time:{}",key,map,time);
-			return false;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -330,7 +333,7 @@ public class RedisService {
 			return true;
 		} catch (Exception e) {
 			log.error("anly-redis error: hset error: key:{},item:{},value:{}",key,item,value);
-			return false;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -352,7 +355,7 @@ public class RedisService {
 			return true;
 		} catch (Exception e) {
 			log.error("anly-redis error: hset error: key:{},item:{},value:{},time:{}",key,item,value,time);
-			return false;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -412,7 +415,7 @@ public class RedisService {
 			return redisTemplate.opsForSet().members(key);
 		} catch (Exception e) {
 			log.error("anly-redis error: sGet error: key:{}",key);
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -426,13 +429,13 @@ public class RedisService {
 	public Boolean sHasKey(String key, Object value) {
 		if(StringUtils.isEmpty(key)){
 			log.error("anly-redis error: sHasKey error: key is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		try {
 			return redisTemplate.opsForSet().isMember(key, value);
 		} catch (Exception e) {
 			log.error("anly-redis error: sHasKey error: key:{},value:{}",key,value);
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -446,14 +449,14 @@ public class RedisService {
 	public Long sSet(String key, Object... values) {
 		if(StringUtils.isEmpty(key)){
 			log.error("anly-redis error: sHasKey error: key is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		try {
 			return redisTemplate.opsForSet().add(key, values);
 		} catch (Exception e) {
 			log.error("anly-redis error: sHasKey error: key:{},values:{}",key,values);
+			throw new AnlyException(ResultCode.ERROR);
 		}
-		return null;
 	}
 
 	/**
@@ -467,11 +470,11 @@ public class RedisService {
 	public Long sSetWithExpireTime(String key, Long time, Object... values) {
 		if(StringUtils.isEmpty(key)){
 			log.error("anly-redis error: sSet error: key is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		if(AnlyUtil.isArrayEmpty(values)){
 			log.error("anly-redis error: sSet error: values is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		try {
 			long count = redisTemplate.opsForSet().add(key, values);
@@ -481,8 +484,8 @@ public class RedisService {
 			return count;
 		} catch (Exception e) {
 			log.error("anly-redis error: sSet error: key:{},time:{},values:{}",key,time,values);
+			throw new AnlyException(ResultCode.ERROR);
 		}
-		return null;
 	}
 
 	/**
@@ -494,13 +497,13 @@ public class RedisService {
 	public Long sGetSetSize(String key) {
 		if(StringUtils.isEmpty(key)){
 			log.error("anly-redis error: sGetSetSize error: key is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		try {
 			return redisTemplate.opsForSet().size(key);
 		} catch (Exception e) {
 			log.error("anly-redis error: sGetSetSize error: key:{}",key);
-			return 0L;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -514,17 +517,17 @@ public class RedisService {
 	public Long setRemove(String key, Object... values) {
 		if(StringUtils.isEmpty(key)){
 			log.error("anly-redis error: setRemove error: key is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		if(AnlyUtil.isArrayEmpty(values)){
 			log.error("anly-redis error: setRemove error: values is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		try {
 			return redisTemplate.opsForSet().remove(key, values);
 		} catch (Exception e) {
 			log.error("anly-redis error: setRemove error: key:{},value:{}",key,values);
-			return 0L;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -541,7 +544,7 @@ public class RedisService {
 			return redisTemplate.opsForList().range(key, start, end);
 		} catch (Exception e) {
 			log.error("anly-redis error: lGet error: key:{},start:{},end:{}",key,start,end);
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -554,13 +557,13 @@ public class RedisService {
 	public Long lGetListSize(String key) {
 		if(StringUtils.isEmpty(key)){
 			log.error("anly-redis error: lGetListSize error: key is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		try {
 			return redisTemplate.opsForList().size(key);
 		} catch (Exception e) {
 			log.error("anly-redis error: lGetListSize error: key:{}",key);
-			return 0L;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -577,7 +580,7 @@ public class RedisService {
 			return redisTemplate.opsForList().index(key, index);
 		} catch (Exception e) {
 			log.error("anly-redis error: lGetIndex error: key:{},index:{}",key,index);
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -594,7 +597,7 @@ public class RedisService {
 			return true;
 		} catch (Exception e) {
 			log.error("anly-redis error: lSet error: key:{},value:{}",key,value);
-			return false;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -615,7 +618,7 @@ public class RedisService {
 			return true;
 		} catch (Exception e) {
 			log.error("anly-redis error: lSet error: key:{},value:{},time:{}",key,value,time);
-			return false;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -632,7 +635,7 @@ public class RedisService {
 			return true;
 		} catch (Exception e) {
 			log.error("anly-redis error: lSetList error: key:{},values:{}",key,value);
-			return false;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -653,7 +656,7 @@ public class RedisService {
 			return true;
 		} catch (Exception e) {
 			log.error("anly-redis error: lSetList error: key:{},values:{},time:{}",key,value,time);
-			return false;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -671,7 +674,7 @@ public class RedisService {
 			return true;
 		} catch (Exception e) {
 			log.error("anly-redis error: lUpdateIndex error: key:{},index:{},value:{}",key,index,value);
-			return false;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
@@ -686,13 +689,13 @@ public class RedisService {
 	public Long lRemove(String key, Long count, Object value) {
 		if(StringUtils.isEmpty(key)){
 			log.error("anly-redis error: lRemove error: key is null");
-			return null;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 		try {
 			return redisTemplate.opsForList().remove(key, count, value);
 		} catch (Exception e) {
 			log.error("anly-redis error: lRemove error: key:{},count:{},value:{}",key,count,value);
-			return 0L;
+			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
 
