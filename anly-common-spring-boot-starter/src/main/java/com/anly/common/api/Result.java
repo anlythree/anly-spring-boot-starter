@@ -8,6 +8,7 @@ import lombok.Getter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 统一响应消息报文
@@ -29,15 +30,15 @@ public class Result<T> implements Serializable {
 	@Schema(description = "消息内容", required = true)
 	private String msg;
 
-	@Schema(description = "时间戳", required = true)
-	private long time;
+	@Schema(description = "时间", required = true)
+	private LocalDateTime time;
 
 	@Schema(description = "业务数据")
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private T data;
 
 	private Result() {
-		this.time = System.currentTimeMillis();
+		this.time = LocalDateTime.now();
 	}
 
 	private Result(IResultCode resultCode) {
@@ -60,7 +61,7 @@ public class Result<T> implements Serializable {
 		this.code = code;
 		this.data = data;
 		this.msg = msg;
-		this.time = System.currentTimeMillis();
+		this.time = LocalDateTime.now();
 	}
 
 	public static <T> Result<T> success() {

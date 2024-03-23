@@ -51,6 +51,11 @@ public class ReqBody implements Serializable {
      */
     private LocalDateTime requestTime;
 
+    /**
+     * 用户标识(手机号或邮箱)
+     */
+    private String userTag;
+
     public void setDefaultBasicField(){
         this.st = 0;
         this.cv = "-1";
