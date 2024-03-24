@@ -112,7 +112,7 @@ public class RedisService {
 	public void setWithExpire(final String key, final Object value, final long time, final TimeUnit timeUnit) {
 		try {
 			if (time > 0) {
-				redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+				redisTemplate.opsForValue().set(key, value, time, timeUnit);
 			} else {
 				set(key, value);
 			}
