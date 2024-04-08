@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -56,7 +57,35 @@ public class ReqBody implements Serializable {
      */
     private String userTag;
 
-    public void setDefaultBasicField(){
+    /**
+     * 获取用户类型
+     *
+     * @return 0:手机号用户 1:邮箱用户 2:无用户信息
+     */
+    public Integer getUserType() {
+        return StringUtils.isEmpty(userTag) ? 2 :
+                (userTag.contains("@") ? 1 : 0);
+    }
+
+    /**
+     * 获取手机号
+     *
+     * @return
+     */
+    public String getPhoneNum() {
+        return getUserType() == 0 ? userTag : null;
+    }
+
+    /**
+     * 获取邮箱
+     *
+     * @return
+     */
+    public String getMail() {
+        return getUserType() == 1 ? userTag : null;
+    }
+
+    public void setDefaultBasicField() {
         this.st = 0;
         this.cv = "-1";
         this.imei = "88-A4-C2-2F-7D-7E";
