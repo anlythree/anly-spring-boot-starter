@@ -21,8 +21,7 @@
 		<!-- mybatis & mybatisPlus组件 -->
 		<dependency>
 			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<!--			<scope>provided</scope>-->
+			<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
 		</dependency>
 		<!-- 免手写Mapper、自动建表、数据自动填充、关联查询、冗余数据自动更新、动态条件 -->
 		<dependency>

@@ -1,7 +1,6 @@
 package com.anly.redis.util;
 
 import com.anly.common.holder.LocalHolder;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.connection.ReturnType;
 import org.springframework.data.redis.core.RedisCallback;
