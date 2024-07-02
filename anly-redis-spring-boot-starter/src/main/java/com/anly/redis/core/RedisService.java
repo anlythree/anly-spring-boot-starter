@@ -16,15 +16,13 @@
  */
 package com.anly.redis.core;
 
-import com.alibaba.fastjson2.JSONObject;
 import com.anly.common.api.ResultCode;
 import com.anly.common.exception.AnlyException;
-import com.anly.common.utils.AnlyUtil;
+import com.anly.common.utils.AnlyCollectionUtil;
 import com.anly.redis.util.RedisLockUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
@@ -34,7 +32,6 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationUtils;
 import org.springframework.util.Assert;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -472,7 +469,7 @@ public class RedisService {
 			log.error("anly-redis error: sSet error: key is null");
 			throw new AnlyException(ResultCode.ERROR);
 		}
-		if(AnlyUtil.isArrayEmpty(values)){
+		if(AnlyCollectionUtil.isArrayEmpty(values)){
 			log.error("anly-redis error: sSet error: values is null");
 			throw new AnlyException(ResultCode.ERROR);
 		}
@@ -519,7 +516,7 @@ public class RedisService {
 			log.error("anly-redis error: setRemove error: key is null");
 			throw new AnlyException(ResultCode.ERROR);
 		}
-		if(AnlyUtil.isArrayEmpty(values)){
+		if(AnlyCollectionUtil.isArrayEmpty(values)){
 			log.error("anly-redis error: setRemove error: values is null");
 			throw new AnlyException(ResultCode.ERROR);
 		}

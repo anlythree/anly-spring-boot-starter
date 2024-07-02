@@ -2,7 +2,7 @@ package com.anly.common.utils;
 
 import java.util.List;
 
-public class AnlyUtil {
+public class AnlyCollectionUtil {
 
     /**
      * 判断数组是否为空
