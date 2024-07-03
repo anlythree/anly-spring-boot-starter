@@ -74,9 +74,9 @@ public class AnlyTimeRange {
      * @return
      */
     public boolean isIntersection(AnlyTimeRange timeRange) {
-        // this的开始时间比param的结束时间晚 || this的结束时间比param的开始时间早
-        return isT1EarlyThanT2(timeRange.getEndTime(), this.startTime) ||
-                isT1EarlyThanT2(this.endTime, timeRange.getStartTime());
+        // 除了 (this的开始时间比param的结束时间晚 || this的结束时间比param的开始时间早) 这两种情况，其他都有交集
+        return !(isT1EarlyThanT2(timeRange.getEndTime(), this.startTime) ||
+                isT1EarlyThanT2(this.endTime, timeRange.getStartTime()));
     }
 
 
