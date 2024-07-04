@@ -16,6 +16,7 @@
  */
 package com.anly.redis.core;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.anly.common.api.ResultCode;
 import com.anly.common.exception.AnlyException;
 import com.anly.common.utils.AnlyCollectionUtil;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.TimeoutUtils;
@@ -264,8 +266,21 @@ public class RedisService {
 	 * @param item 项 不能为 null
 	 * @return 值
 	 */
-	public Object hget(String key, String item) {
+	public Object hGet(String key, String item) {
 		return redisTemplate.opsForHash().get(key, item);
+	}
+
+	/**
+	 * 获取hash中的一个value
+	 *
+	 * @param key  键 不能为 null
+	 * @param item 项 不能为 null
+	 * @return 值
+	 */
+	public String hGetString(String key, String item) {
+		HashOperations<String, String, String> hashOperations =
+				redisTemplate.opsForHash();
+		return hashOperations.get(key, item);
 	}
 
 	/**
@@ -274,8 +289,23 @@ public class RedisService {
 	 * @param key 键
 	 * @return 对应的多个键值
 	 */
-	public Map<Object, Object> hmget(String key) {
-		return redisTemplate.opsForHash().entries(key);
+	public Map<String, Object> hGetAll(String key) {
+		HashOperations<String, String, Object> hashOperations = redisTemplate.opsForHash();
+		return hashOperations.entries(key);
+	}
+
+	/**
+	 * 获取 hashKey对应的所有键值
+	 *
+	 * @param key 键
+	 * @return 对应的多个键值
+	 */
+	public Map<String, String> hGetAllString(String key) {
+		HashOperations<String, String, String> stringObjectObjectHashOperations = redisTemplate.opsForHash();
+		Map<Object, Object> entries = redisTemplate.opsForHash().entries(key);
+		if(entries == null){
+
+		}
 	}
 
 	/**
@@ -285,12 +315,12 @@ public class RedisService {
 	 * @param map 对应多个键值
 	 * @return true 成功 false 失败
 	 */
-	public Boolean hmset(String key, Map<String, Object> map) {
+	public Boolean hSetAll(String key, Map<String, Object> map) {
 		try {
 			redisTemplate.opsForHash().putAll(key, map);
 			return true;
 		} catch (Exception e) {
-			log.error("anly-redis error: hmset error: key:{},map:{}",key,map);
+			log.error("anly-redis error: hSetAll error: key:{},map:{}",key,map);
 			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
@@ -303,7 +333,7 @@ public class RedisService {
 	 * @param time 时间(秒)
 	 * @return true成功 false失败
 	 */
-	public Boolean hmset(String key, Map<String, Object> map, Long time) {
+	public Boolean hSetAll(String key, Map<String, Object> map, Long time) {
 		try {
 			redisTemplate.opsForHash().putAll(key, map);
 			if (time > 0) {
@@ -311,7 +341,7 @@ public class RedisService {
 			}
 			return true;
 		} catch (Exception e) {
-			log.error("anly-redis error: hmset and set expire time error: key:{},map:{},time:{}",key,map,time);
+			log.error("anly-redis error: hSetAll and set expire time error: key:{},map:{},time:{}",key,map,time);
 			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
@@ -324,12 +354,12 @@ public class RedisService {
 	 * @param value 值
 	 * @return true 成功 false失败
 	 */
-	public Boolean hset(String key, String item, Object value) {
+	public Boolean hSet(String key, String item, Object value) {
 		try {
 			redisTemplate.opsForHash().put(key, item, value);
 			return true;
 		} catch (Exception e) {
-			log.error("anly-redis error: hset error: key:{},item:{},value:{}",key,item,value);
+			log.error("anly-redis error: hSet error: key:{},item:{},value:{}",key,item,value);
 			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
@@ -343,7 +373,7 @@ public class RedisService {
 	 * @param time  时间(秒) 注意:如果已存在的hash表有时间,这里将会替换原有的时间
 	 * @return true 成功 false失败
 	 */
-	public Boolean hset(String key, String item, Object value, Long time) {
+	public Boolean hSet(String key, String item, Object value, Long time) {
 		try {
 			redisTemplate.opsForHash().put(key, item, value);
 			if (time > 0) {
@@ -351,7 +381,7 @@ public class RedisService {
 			}
 			return true;
 		} catch (Exception e) {
-			log.error("anly-redis error: hset error: key:{},item:{},value:{},time:{}",key,item,value,time);
+			log.error("anly-redis error: hSet error: key:{},item:{},value:{},time:{}",key,item,value,time);
 			throw new AnlyException(ResultCode.ERROR);
 		}
 	}
@@ -362,7 +392,7 @@ public class RedisService {
 	 * @param key  键 不能为 null
 	 * @param item 项 可以使多个不能为 null
 	 */
-	public void hdel(String key, Object... item) {
+	public void hDel(String key, Object... item) {
 		redisTemplate.opsForHash().delete(key, item);
 	}
 
@@ -385,7 +415,7 @@ public class RedisService {
 	 * @param by   要增加几(大于0)
 	 * @return Double
 	 */
-	public Double hincr(String key, String item, Double by) {
+	public Double hIncr(String key, String item, Double by) {
 		return redisTemplate.opsForHash().increment(key, item, by);
 	}
 
@@ -397,7 +427,7 @@ public class RedisService {
 	 * @param by   要减少记(小于0)
 	 * @return Double
 	 */
-	public Double hdecr(String key, String item, Double by) {
+	public Double hDecr(String key, String item, Double by) {
 		return redisTemplate.opsForHash().increment(key, item, -by);
 	}
 
