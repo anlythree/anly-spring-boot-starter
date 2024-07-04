@@ -301,11 +301,8 @@ public class RedisService {
 	 * @return 对应的多个键值
 	 */
 	public Map<String, String> hGetAllString(String key) {
-		HashOperations<String, String, String> stringObjectObjectHashOperations = redisTemplate.opsForHash();
-		Map<Object, Object> entries = redisTemplate.opsForHash().entries(key);
-		if(entries == null){
-
-		}
+		HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
+		return hashOperations.entries(key);
 	}
 
 	/**
