@@ -25,11 +25,15 @@ public class AnlyException extends RuntimeException {
 	@Serial
 	private static final long serialVersionUID = 5782968730281544562L;
 
+	/**
+	 * 异常码
+	 */
 	private IResultCode errorCode;
 
+	/**
+	 * 原异常
+	 */
 	private Exception originException;
-
-	private int status = INTERNAL_SERVER_ERROR.value();
 
 	public AnlyException(String message) {
 		super(message);

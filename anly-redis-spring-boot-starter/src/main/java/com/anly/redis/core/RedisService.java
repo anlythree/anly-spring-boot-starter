@@ -195,6 +195,23 @@ public class RedisService {
 	}
 
 	/**
+	 * 普通缓存根据提供类获取
+	 *
+	 * @param key 键
+	 * @return 值
+	 */
+	public <T> T get(String key,Class<T> resClass) {
+		if(StringUtils.isEmpty(key)){
+			return null;
+		}
+		Object o = redisTemplate.opsForValue().get(key);
+		if(o == null){
+			return null;
+		}
+		return resClass.cast(o);
+	}
+
+	/**
 	 * 根据key获取对象
 	 *
 	 * @param key             the key
@@ -271,6 +288,21 @@ public class RedisService {
 	}
 
 	/**
+	 * Hash Get 指定返回值类型
+	 *
+	 * @param key  键 不能为 null
+	 * @param item 项 不能为 null
+	 * @return 值
+	 */
+	public <T> T hGet(String key, String item, Class<T> resClass) {
+		Object o = redisTemplate.opsForHash().get(key, item);
+		if(o == null){
+			return null;
+		}
+		return resClass.cast(o);
+	}
+
+	/**
 	 * 获取hash中的一个value
 	 *
 	 * @param key  键 不能为 null
@@ -295,6 +327,17 @@ public class RedisService {
 	}
 
 	/**
+	 * 获取 hashKey对应的所有键值,指定返回值类型
+	 *
+	 * @param key 键
+	 * @return 对应的多个键值
+	 */
+	public <T> Map<String, T> hGetAll(String key, Class<T> resClass) {
+		HashOperations<String, String, T> hashOperations = redisTemplate.opsForHash();
+		return hashOperations.entries(key);
+	}
+
+	/**
 	 * 获取 hashKey对应的所有键值
 	 *
 	 * @param key 键
@@ -312,7 +355,7 @@ public class RedisService {
 	 * @param map 对应多个键值
 	 * @return true 成功 false 失败
 	 */
-	public Boolean hSetAll(String key, Map<String, Object> map) {
+	public Boolean hSetAll(String key, Map<String, ?> map) {
 		try {
 			redisTemplate.opsForHash().putAll(key, map);
 			return true;
@@ -330,7 +373,7 @@ public class RedisService {
 	 * @param time 时间(秒)
 	 * @return true成功 false失败
 	 */
-	public Boolean hSetAll(String key, Map<String, Object> map, Long time) {
+	public Boolean hSetAll(String key, Map<String, ?> map, Long time) {
 		try {
 			redisTemplate.opsForHash().putAll(key, map);
 			if (time > 0) {
