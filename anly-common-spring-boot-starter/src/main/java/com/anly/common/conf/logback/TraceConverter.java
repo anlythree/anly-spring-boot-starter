@@ -1,6 +1,7 @@
 package com.anly.common.conf.logback;
 
 /**
+ * logback 用于打印trace的分词器
  * @DATE: 2023/10/28
  * @USER: anlythree
  */
@@ -11,8 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 
 public class TraceConverter extends ClassicConverter {
 
-    // todo-anlythree 异步日志添加trace https://blog.csdn.net/HeiheiChihiro/article/details/128023013
-    // 实测，异步获取不到session中的信息
     @Override
     public String convert(ILoggingEvent event) {
         try {
