@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.concurrent.ListenableFuture;
 
+import java.io.Serial;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
@@ -16,6 +17,7 @@ import java.util.concurrent.Future;
  */
 public class CustomThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
 
+    @Serial
     private static final long serialVersionUID = -1620411091519062590L;
 
     @Override

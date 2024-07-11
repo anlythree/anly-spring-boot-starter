@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * todo-anlythree 貌似没什么用，应该是要用objectMapper配置
  */
-@Configuration
+//@Configuration
 public class JacksonReqFormat {
     /**
      * Date格式化字符串
@@ -56,11 +56,9 @@ public class JacksonReqFormat {
                 .serializerByType(BigInteger.class, ToStringSerializer.instance)
                 .serializerByType(BigDecimal.class, ToStringSerializer.instance)
                 .serializerByType(Long.class, ToStringSerializer.instance)
-                .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
                 .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT)))
                 .deserializerByType(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(DATE_FORMAT)))
-                .deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(TIME_FORMAT)))
-                .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+                .deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(TIME_FORMAT)));
     }
 
 }
