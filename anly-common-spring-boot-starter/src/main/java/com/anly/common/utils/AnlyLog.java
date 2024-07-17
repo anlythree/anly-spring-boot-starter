@@ -3,6 +3,8 @@ package com.anly.common.utils;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.StringJoiner;
+
 /**
  * 自定义日志打印类
  *
@@ -66,7 +68,7 @@ public class AnlyLog {
             return;
         }
         for (int i = 0; i < args.length; i++) {
-            args[i] = "【" + args[i].getClass().getSimpleName() +":"+ JSONObject.toJSONString(args[i]) + "】";
+            args[i] = "【" + args[i].getClass().getSimpleName() + ":" + (args[i] instanceof String ? args[i] : JSONObject.toJSONString(args[i])) + "】";
         }
 
     }
