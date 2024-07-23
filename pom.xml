@@ -85,6 +85,8 @@
         <hutool.version>5.8.19</hutool.version>
         <caffeine.version>3.1.2</caffeine.version>
         <snakeyaml.version>2.2</snakeyaml.version>
+        <jackson.version>2.15.2</jackson.version>
+        <httpclient.version>5.1.3</httpclient.version>
     </properties>
 
     <dependencyManagement>
@@ -352,6 +354,20 @@
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${snakeyaml.version}</version>
+            </dependency>
+
+            <!-- jackson LocalDateTime支持 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <!-- 解码gzip压缩 -->
+            <dependency>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
+                <version>${httpclient.version}</version>
             </dependency>
 
         </dependencies>
