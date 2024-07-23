@@ -1,1 +1,2 @@
 com.anly.redis.config.RedisConfiguration
+com.anly.redis.util.RedisLockUtil

@@ -1,11 +1,15 @@
 package com.anly.redis.util;
 
 import com.anly.common.holder.LocalHolder;
+import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.connection.ReturnType;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,12 +18,12 @@ import java.util.concurrent.TimeUnit;
  *
  * @author anlythree
  */
+@Component
+@NoArgsConstructor
+@AllArgsConstructor
 public class RedisLockUtil {
 
-	public RedisLockUtil(RedisTemplate<String, Object> redisTemplate) {
-		this.redisTemplate = redisTemplate;
-	}
-
+	@Resource
 	private RedisTemplate<String, Object> redisTemplate;
 
 	private static final byte[] SCRIPT_RELEASE_LOCK = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end".getBytes();
