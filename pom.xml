@@ -363,12 +363,19 @@
                 <version>${jackson.version}</version>
             </dependency>
 
-            <!-- 解码gzip压缩 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-webflux</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+<!--            todo-anlythree 灰度开发，后期删除掉-->
             <dependency>
                 <groupId>org.apache.httpcomponents.client5</groupId>
                 <artifactId>httpclient5</artifactId>
                 <version>${httpclient.version}</version>
             </dependency>
+
 
         </dependencies>
     </dependencyManagement>

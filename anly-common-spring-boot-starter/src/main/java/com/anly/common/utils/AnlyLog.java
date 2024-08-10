@@ -68,6 +68,10 @@ public class AnlyLog {
             return;
         }
         for (int i = 0; i < args.length; i++) {
+            if (args[i] instanceof String){
+                // String类型不处理
+                return;
+            }
             args[i] = "【" + args[i].getClass().getSimpleName() + ":" + (args[i] instanceof String ? args[i] : JSONObject.toJSONString(args[i])) + "】";
         }
 
