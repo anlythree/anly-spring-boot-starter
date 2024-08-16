@@ -2,6 +2,7 @@ package com.anly.common.holder;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.anly.common.dto.CurrentUser;
+import com.anly.common.enums.YesOrNotEnum;
 import io.micrometer.common.util.StringUtils;
 import lombok.experimental.UtilityClass;
 import org.assertj.core.util.Maps;
@@ -108,7 +109,17 @@ public class LocalHolder {
      * @return String
      */
     public CurrentUser getCurrentUser() {
-        return THREAD_LOCAL_CURRENT_USER.get();
+        CurrentUser currentUser = THREAD_LOCAL_CURRENT_USER.get();
+        if (currentUser != null){
+            return currentUser;
+        }
+        // 构造默认用户
+        currentUser = new CurrentUser();
+        currentUser.setUserId(-1);
+        currentUser.setUserNo("defaultUserNo");
+        currentUser.setUserName("defaultUserName");
+        currentUser.setLoginType(YesOrNotEnum.N);
+        return currentUser;
     }
 
     /**
