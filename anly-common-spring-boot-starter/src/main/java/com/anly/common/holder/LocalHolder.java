@@ -115,7 +115,7 @@ public class LocalHolder {
         }
         // 构造默认用户
         currentUser = new CurrentUser();
-        currentUser.setUserId(-1);
+        currentUser.setUserId(0);
         currentUser.setUserNo("defaultUserNo");
         currentUser.setUserName("defaultUserName");
         currentUser.setLoginType(YesOrNotEnum.N);
