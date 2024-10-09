@@ -44,10 +44,10 @@ public class AnlyScaExceptionHandler {
         //封装需要返回的错误信息
         StringJoiner stringJoiner = new StringJoiner(",", " find param error \n【", "】");
         e.getBindingResult().getFieldErrors().forEach(fieldError -> stringJoiner.add(fieldError.getField() + ":" + fieldError.getDefaultMessage()));
-        log.error("MethodArgumentNotValidException!,error info:{}",stringJoiner);
+        log.error("MethodArgumentNotValidException!,error info:{}", stringJoiner);
         //错误返回
         Result<Object> fail = Result.fail(ResultCode.PARAM_ERROR.getCode(), stringJoiner.toString());
-        log.error("error response-->url:["+ LocalHolder.getUrl()+"],result:["+ JSONObject.toJSONString(fail));
+        log.error("error response-->url:[" + LocalHolder.getUrl() + "],result:[" + JSONObject.toJSONString(fail));
         return fail;
     }
 
@@ -63,10 +63,10 @@ public class AnlyScaExceptionHandler {
         HttpServletRequest httpRequest = getHttpRequest();
         httpRequest.getRequestURI();
         log.error("AuthException! authType:{},authMessage:{},complete stacktrace from anly【\n{}】",
-                e.getAuthType(),e.getMessage(),getStackTrace(e));
+                e.getAuthType(), e.getMessage(), getStackTrace(e));
         IResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
         Result<Object> fail = Result.fail(resultCode, e.getMessage());
-        log.error("error response-->url:["+ LocalHolder.getUrl()+"],result:[" + JSONObject.toJSONString(fail));
+        log.error("error response-->url:[" + LocalHolder.getUrl() + "],result:[" + JSONObject.toJSONString(fail));
         return fail;
     }
 
@@ -83,14 +83,14 @@ public class AnlyScaExceptionHandler {
         HttpServletRequest httpRequest = getHttpRequest();
         httpRequest.getRequestURI();
         String originExceptionStr = "";
-        if(e.getOriginException() != null){
+        if (e.getOriginException() != null) {
             // 如果有异常的原始报错，则在结尾展示
-            originExceptionStr = "complete origin exception is 【"+ getStackTrace(e.getOriginException())+"】";
+            originExceptionStr = "complete origin exception is 【" + getStackTrace(e.getOriginException()) + "】";
         }
-        log.error("AnlyException! complete stacktrace from anly【\n{}】"+ originExceptionStr+e.getMessage(),getStackTrace(e));
+        log.error("AnlyException! complete stacktrace from anly【\n{}】" + originExceptionStr + e.getMessage(), getStackTrace(e));
         IResultCode resultCode = Optional.ofNullable(e.getErrorCode()).orElse(ResultCode.FAILURE);
         Result<Object> fail = Result.fail(resultCode, e.getMessage());
-        log.error("error response-->url:["+ LocalHolder.getUrl()+"],result:["+ JSONObject.toJSONString(fail));
+        log.error("error response-->url:[" + LocalHolder.getUrl() + "],result:[" + JSONObject.toJSONString(fail));
         return fail;
     }
 
@@ -105,10 +105,10 @@ public class AnlyScaExceptionHandler {
     public Result<?> handleException(Exception e) {
         HttpServletRequest httpRequest = getHttpRequest();
         httpRequest.getRequestURI();
-        log.error("Exception! complete stacktrace from anly【\n{}】",getStackTrace(e));
+        log.error("Exception! complete stacktrace from anly【\n{}】", getStackTrace(e));
         // 其他系统异常
         Result<Object> fail = Result.fail(ResultCode.ERROR);
-        log.error("error response-->url:["+ LocalHolder.getUrl()+"],result:[" + JSONObject.toJSONString(fail)+"]");
+        log.error("error response-->url:[" + LocalHolder.getUrl() + "],result:[" + JSONObject.toJSONString(fail) + "]");
         return fail;
     }
 
@@ -128,7 +128,7 @@ public class AnlyScaExceptionHandler {
         StringWriter sw = new StringWriter();
         try (PrintWriter pw = new PrintWriter(sw)) {
             throwable.printStackTrace(pw);
-            return sw.toString();
+            return throwable.getMessage() + "\n" + sw;
         }
     }
 

@@ -13,11 +13,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class BaseDto {
+    /**
+     * id
+     */
     private Integer id;
 
+    /**
+     * 创建者id
+     */
     private Integer creatorId;
 
+    /**
+     * 租户id
+     */
     private Integer tenantId;
 
+    /**
+     * 乐观锁
+     */
     private String lockVersion;
 }
